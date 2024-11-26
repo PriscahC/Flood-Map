@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://js.arcgis.com/embeddable-components/4.31/arcgis-embeddable-components.esm.js"></script>
+    <title>Rescue Me</title>
+</head>
+    <body style="background-color: rgba(17, 8, 65, 0.2);">
+        <style>
+            h3{
+                color: white;
+            }
+        </style>
+        <div style="display: flex;">
+            <div>
+                <arcgis-embedded-map style="height:700px;width:800px;" item-id="95868e9ef2794d81b01f2ccbeb08d8ed" theme="dark" portal-url="https://africageoportal.maps.arcgis.com" heading-enabled legend-enabled ></arcgis-embedded-map>
+            </div>
+            <div style="display: flex; align-items: center; text-align: center; margin: 0, auto;">
+                <div>
+
+                    <!-- Second Chart: Radar -->
+                    <h3>Radar Chart</h3>
+                    <img id="radar-chart-image" src="" alt="Radar Chart Image" style="height: 300px;"/>
+                    <!-- First Chart: Gauge -->
+                    <h3>Gauge Chart</h3>
+                    <img id="gauge-chart-image" src="" alt="Gauge Chart Image" style="height: 150px;"/>
+                </div>
+                <div>
+
+                </div>
+            </div>
+        </div>
+        <script>
+            // Gauge chart configuration
+                const gaugeChartConfig = {
+                type: 'gauge',
+                data: {
+                    datasets: [{
+                    value: 30,
+                    data: [20, 40, 60],
+                    backgroundColor: ['green', 'orange', 'red'],
+                    borderWidth: 2
+                    }]
+                },
+                options: {
+                    valueLabel: {
+                    fontSize: 22,
+                    backgroundColor: 'transparent',
+                    color: '#fff',
+                    formatter: function(value, context) {
+                        return value + ' mtrs';
+                    },
+                    bottomMarginPercentage: 10
+                    }
+                }
+                };
+
+                // Radar chart configuration
+                const radarChartConfig = {
+                type: 'radar',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May'],
+                    datasets: [
+                    { label: 'Wajir', data: [5, 6, 7, 18, 19] },
+                    { label: 'Tana River', data: [10, 20, 30, 40, 50] },
+                    ],
+                }
+                };
+
+                // Generate the URLs for the charts
+                const gaugeChartUrl = `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(gaugeChartConfig))}`;
+                const radarChartUrl = `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(radarChartConfig))}`;
+
+                // Set the image sources for both charts
+                document.getElementById('gauge-chart-image').src = gaugeChartUrl;
+                document.getElementById('radar-chart-image').src = radarChartUrl;
+          </script>
+    </body>
+</html>
